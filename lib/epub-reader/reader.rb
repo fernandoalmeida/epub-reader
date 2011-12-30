@@ -3,6 +3,8 @@ require 'zip/zipfilesystem'
 module Epub
   class Reader
 
+    EPUB_MIMETYPE = "application/epub+zip"
+
     attr_reader :filename, :file
     
     def initialize(file)
@@ -18,6 +20,18 @@ module Epub
       else
         reader
       end
+    end
+
+    def mimetype
+      begin
+        file.get_input_stream('mimetype').read
+      rescue
+        nil
+      end
+    end
+    
+    def valid?
+      mimetype == EPUB_MIMETYPE
     end
     
   end
