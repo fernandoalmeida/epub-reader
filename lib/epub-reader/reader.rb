@@ -3,11 +3,11 @@ module Epub
 
     EPUB_MIMETYPE = "application/epub+zip"
 
-    attr_reader :filename, :file
+    attr_reader :filepath, :file
     
     def initialize(f)
       raise(FileNotFoundError, "File not found") unless File.exists?(f)
-      @filename  = f.to_s
+      @filepath  = f.to_s
       @file      = EpubFile.new(f)
       raise(MalformedFileError, "Invalid EPUB file format") unless valid?
     end
@@ -37,10 +37,31 @@ module Epub
       end
     end
 
+    # TODO: To parse other META-INF files
+    # signatures.xml [optional]
+    # Contains digital signatures for various assets.
+
+    # encryption.xml [optional]
+    # Contains information about the encryption of Publication resources. (This file is required if font obfuscation is used.)
+
+    # metadata.xml [optional]
+    # Used to store metadata about the container.
+
+    # rights.xml [optional]
+    # Used to store information about digital rights.
+
+    # manifest.xml [allowed]
+    # A manifest of container contents as allowed by Open Document Format [ODF]. 
+
+    # Convenient method
+    def package(index = 0)
+      container.package(index)
+    end
+
     private
 
     def valid?
-      valid_mimetype? && valid_container?
+      valid_mimetype? && valid_container? && valid_package?
     end
 
     def valid_mimetype?
@@ -50,5 +71,10 @@ module Epub
     def valid_container?
       !container.nil?
     end
+
+    def valid_package?
+      !package.nil?
+    end
+
   end
 end
