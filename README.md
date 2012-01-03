@@ -7,7 +7,7 @@ as much as possible the specification from IDPF.
 
 The recommended installation method is via Rubygems.
 
-  gem install epub-reader
+    gem install epub-reader
 
 # Usage
 
