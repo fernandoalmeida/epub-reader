@@ -1,5 +1,3 @@
-require 'zip/zipfilesystem'
-
 module Epub
   class Reader
 
@@ -7,16 +5,17 @@ module Epub
 
     attr_reader :filename, :file
     
-    def initialize(file)
-      raise FileNotFoundError unless File.exists?(file)
-      @filename  = file
-      @file      = Zip::ZipFile.open(file)
+    def initialize(f)
+      raise(FileNotFoundError, "File not found") unless File.exists?(f)
+      @filename  = f.to_s
+      @file      = EpubFile.new(f)
+      raise(MalformedFileError, "Invalid EPUB file format") unless valid?
     end
     
-    def Reader.open(file)
-      reader = Reader.new(file)
+    def Reader.open(f)
+      reader = Reader.new(f)
       if block_given?
-          yield reader
+        yield reader
       else
         reader
       end
@@ -29,10 +28,27 @@ module Epub
         nil
       end
     end
-    
+
+    def container
+      begin
+        @container ||= Container.new(file.get_input_stream('META-INF/container.xml').read)
+      rescue
+        nil
+      end
+    end
+
+    private
+
     def valid?
+      valid_mimetype? && valid_container?
+    end
+
+    def valid_mimetype?
       mimetype == EPUB_MIMETYPE
     end
-    
+
+    def valid_container?
+      !container.nil?
+    end
   end
 end
