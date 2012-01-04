@@ -1,7 +1,8 @@
 module Epub
   class Reader
 
-    EPUB_MIMETYPE = "application/epub+zip"
+    EPUB_MIMETYPE     = "application/epub+zip"
+    PACKAGE_MEDIATYPE = "application/oebps-package+xml"
 
     attr_reader :filepath, :file
     
@@ -30,11 +31,7 @@ module Epub
     end
 
     def container
-      begin
-        @container ||= Container.new(file.get_input_stream('META-INF/container.xml').read)
-      rescue
-        nil
-      end
+      @container ||= Container.new(file)
     end
 
     # TODO: To parse other META-INF files
@@ -73,7 +70,7 @@ module Epub
     end
 
     def valid_package?
-      !package.nil?
+      package.path.match(/\.opf$/) && package.mediatype == PACKAGE_MEDIATYPE
     end
 
   end
