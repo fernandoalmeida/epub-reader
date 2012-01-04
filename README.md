@@ -18,6 +18,16 @@ level information (metadata, toc, page count, etc) is available via this object.
     
     # comming soon
     puts reader.title
-    puts reader.isbn
+    puts reader.language
     puts reader.author
     puts reader.pages
+
+# References
+
+[What is EPUB 3?](http://shop.oreilly.com/product/0636920022442.do)
+
+[EPUB Publications Specifications](http://idpf.org/epub/30/spec/epub30-publications.html)
+
+[EPUB Content Documents Specifications](http://idpf.org/epub/30/spec/epub30-contentdocs.html)
+
+[EPUB Open Container Formats Specifications](http://idpf.org/epub/30/spec/epub30-ocf.html)
