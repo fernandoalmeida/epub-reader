@@ -21,7 +21,7 @@ module Epub
     end
 
     def version
-      root.attr('version').to_s
+      root.attr('version').to_s.to_i
     end
 
     def identifier
@@ -36,6 +36,34 @@ module Epub
 
     def language
       languages.first.text
+    end
+
+    # TODO: identify role
+    # TODO: identify file-as
+    # TODO: identify alternate-script
+    # TODO: identify display-seq
+    def creator
+      creators.size > 0 ? creators.first.text : ""
+    end
+
+    # TODO: creator copy
+    def contributor
+      contributors.size > 0 ? contributors.first.text : ""
+    end
+
+    def date
+      d = metadata.css('data')
+      d.size > 0 ? d.text : ""
+    end
+
+    def source
+      s = metadata.css('source')
+      s.size > 0 ? s.text : ""
+    end
+
+    def type
+      t = metadata.css('type')
+      t.size > 0 ? t.text : ""
     end
 
     # TODO: to do parse of
@@ -114,6 +142,22 @@ module Epub
 
     def languages
       metadata.css('language')
+    end
+
+    def creators
+      metadata.css('creator')
+    end
+
+    def contributors
+      metadata.css('contributor')
+    end
+
+    def meta
+      metadata.css('meta')
+    end
+
+    def meta
+      metadata.css('link')
     end
   end
 end

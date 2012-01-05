@@ -20,19 +20,38 @@ describe Epub::Package do
   end
 
   it 'get the epub version' do
-    @reader.package.version.should eq("2.0")
+    @reader.package.version.should eq(2)
   end
 
   it 'get the epub unique identifier' do
     @reader.package.identifier.should eq("urn:uuid:bdb0c6b5-5620-440f-9e14-5e1500197941")
   end
 
-  it 'get the epub title' do
-    @reader.package.title.should eq("Flowers of Evil")
-  end
-
-  it 'get the epub language' do
+  it 'get the content language' do
     @reader.package.language.should eq("en")
   end
 
+  it 'get the content title' do
+    @reader.package.title.should eq("Flowers of Evil")
+  end
+
+  it 'get the content creator' do
+    @reader.package.creator.should eq("Charles Baudelaire")
+  end
+
+  it 'get the content contributor' do
+    @reader.package.contributor.should eq("ManyBooks.net")
+  end
+
+  it 'get the publication date' do
+    @reader.package.date.should be_empty
+  end
+
+  it 'get the publication source' do
+    @reader.package.source.should be_empty
+  end
+
+  it 'get the content type' do
+    @reader.package.source.should be_empty
+  end
 end
