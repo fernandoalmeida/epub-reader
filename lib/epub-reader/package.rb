@@ -66,8 +66,36 @@ module Epub
       t.size > 0 ? t.text : ""
     end
 
+    def resources
+      manifest.css('item')
+    end
+
+    def images
+      resources.select{|resource| resource.attr('media-type').to_s.match(/^image/)}
+    end
+
+    def html
+      resources.css('[media-type="application/xhtml+xml"]')
+    end
+
+    def stylesheets
+      resources.css('[media-type="text/css"]')
+    end
+
+    def javascripts
+      resources.css('[media-type="text/javascript"]')
+    end
+
+    # TODO: search oficial media types
+    def fonts
+      resources.select{|resource| resource.attr('media-type').to_s.match(/font|opentype/)}
+    end
+
+    def toc
+      resources.css('[media-type="application/x-dtbncx+xml"]').attr('href').to_s
+    end
+    
     # TODO: to do parse of
-    # metadata [required]
     # manifest [required]
     # spine    [required]
     # guide    [optional/deprecated]
@@ -156,8 +184,16 @@ module Epub
       metadata.css('meta')
     end
 
-    def meta
+    def link
       metadata.css('link')
     end
+
+    ############
+    # Manifest #
+    ############
+    def manifest
+      root.css('manifest')
+    end
+
   end
 end

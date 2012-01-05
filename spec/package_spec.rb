@@ -54,4 +54,32 @@ describe Epub::Package do
   it 'get the content type' do
     @reader.package.source.should be_empty
   end
+
+  it 'get the full resource list' do
+    @reader.package.resources.should_not be_empty
+  end
+
+  it 'get the image list' do
+    @reader.package.images.should_not be_empty
+  end
+
+  it 'get the html list' do
+    @reader.package.html.should_not be_empty
+  end
+
+  it 'get the stylesheet list' do
+    @reader.package.stylesheets.should_not be_empty
+  end
+
+  it 'get the javascript list' do
+    @reader.package.javascripts.should be_empty
+  end
+
+  it 'get the font list' do
+    @reader.package.fonts.should be_empty
+  end
+
+  it 'get the table of content' do
+    @reader.package.toc.should eq("toc.ncx")
+  end
 end
