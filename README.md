@@ -29,3 +29,5 @@ level information (metadata, toc, page count, etc) is available via this object.
 [EPUB Content Documents Specifications](http://idpf.org/epub/30/spec/epub30-contentdocs.html)
 
 [EPUB Open Container Formats Specifications](http://idpf.org/epub/30/spec/epub30-ocf.html)
+
+[Shared Workspace for Emerging Specifications and Schemas for EPUB 3](http://code.google.com/p/epub-revision/downloads/list)
