@@ -71,7 +71,7 @@ module Epub
     end
 
     def images
-      resources.select{|resource| resource.attr('media-type').to_s.match(/^image/)}
+      resources.select{|resource| resource.attr('media-type').to_s.match(/^image\/(gif|jpeg|svg\+xml)/)}
     end
 
     def html
@@ -86,13 +86,19 @@ module Epub
       resources.css('[media-type="text/javascript"]')
     end
 
-    # TODO: search oficial media types
     def fonts
-      resources.select{|resource| resource.attr('media-type').to_s.match(/font|opentype/)}
+      resources.select{|resource| resource.attr('media-type').to_s.match(/application\/(vnd\.ms-opentype|font-woff)/)}
+    end
+
+    def audios
+      resources.select{|resource| resource.attr('media-type').to_s.match(/^audio\/(mpeg|mp4)/)}
     end
 
     def toc
-      resources.css('[media-type="application/x-dtbncx+xml"]').attr('href').to_s
+      toc_item_id       = spine.attr("toc")
+      toc_item_mimetype = "application/x-dtbncx+xml"
+      toc_item_selector = toc_item_id ? "##{toc_item_id.to_s}" : '[media-type="#{toc_item_mimetype}"]'
+      resources.css(toc_item_selector).attr('href').to_s
     end
     
     # TODO: to do parse of
@@ -100,6 +106,10 @@ module Epub
     # spine    [required]
     # guide    [optional/deprecated]
     # bindings [optional]
+
+    def reading_order
+      spine.css('itemref')
+    end
 
     private
 
@@ -128,7 +138,7 @@ module Epub
     end
 
     def dir
-      root.attr('dir').to_s
+      (spine.attr('page-progression-direction') || root.attr('dir')).to_s
     end
 
     def id
@@ -195,5 +205,16 @@ module Epub
       root.css('manifest')
     end
 
+    ############
+    #  Spine   #
+    ############
+    def spine
+      root.css('spine')
+    end
+
+    def reading_order_selectors
+      reading_order.map{|item| "##{item.attr('idref')}"}
+    end
+    
   end
 end

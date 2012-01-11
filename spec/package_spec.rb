@@ -60,15 +60,15 @@ describe Epub::Package do
   end
 
   it 'get the image list' do
-    @reader.package.images.should_not be_empty
+    @reader.package.images.size.should eq(1)
   end
 
   it 'get the html list' do
-    @reader.package.html.should_not be_empty
+    @reader.package.html.size.should eq(2)
   end
 
   it 'get the stylesheet list' do
-    @reader.package.stylesheets.should_not be_empty
+    @reader.package.stylesheets.size.should eq(1)
   end
 
   it 'get the javascript list' do
@@ -79,7 +79,19 @@ describe Epub::Package do
     @reader.package.fonts.should be_empty
   end
 
-  it 'get the table of content' do
+  it 'get the audio list' do
+    @reader.package.audios.should be_empty
+  end
+
+  it 'get the table of content (toc)' do
     @reader.package.toc.should eq("toc.ncx")
   end
+
+  it 'get the reading order' do
+    list = @reader.package.reading_order
+    list.size.should eq(2)
+    list[0].attr('idref').should eq('titlepage')
+    list[1].attr('idref').should eq('html')
+  end
+
 end
