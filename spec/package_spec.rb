@@ -94,4 +94,8 @@ describe Epub::Package do
     list[1].attr('idref').should eq('html')
   end
 
+  it 'get the book cover' do
+    @reader.package.cover.should eq("cover.jpg")
+  end
+
 end

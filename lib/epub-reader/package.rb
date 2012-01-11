@@ -100,7 +100,13 @@ module Epub
       toc_item_selector = toc_item_id ? "##{toc_item_id.to_s}" : '[media-type="#{toc_item_mimetype}"]'
       resources.css(toc_item_selector).attr('href').to_s
     end
-    
+
+    def cover
+      cover_meta    = metadata.css('[name="cover"]')
+      cover_content = cover_meta ? cover_meta.attr('content').to_s : ""
+      cover_content.match(/\.(gif|jpe?g|png)/) ? cover_content : resources.css("##{cover_content}").attr('href').to_s
+    end
+
     # TODO: to do parse of
     # manifest [required]
     # spine    [required]
