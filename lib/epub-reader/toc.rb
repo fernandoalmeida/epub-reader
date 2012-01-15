@@ -33,8 +33,37 @@ module Epub
       end
     end
 
+    # TODO: Add Stylesheets
+    # TODO: Convert nested navigation
     def ncx_to_html
-      nav
+      html     = <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" profile="http://www.idpf.org/epub/30/profile/content/">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>#{title}</title>
+  </head>
+  <body>
+    <section>
+      <nav id="toc" epub:type="toc">
+        <ol>
+EOF
+      selector = "ncx > navMap > navPoint"
+      @xml.css(selector).each do |point|
+        html += <<EOF
+<li id="#{point.attr('id').to_s}">
+  <a href="#{point.css('content').attr('src').to_s}">#{point.css('navLabel text').text}</a>
+</li>
+EOF
+      end
+      html += <<EOF
+        </ol>
+      </nav>
+    </section>
+  </body>
+</html>
+EOF
+      html
     end
 
     def title
@@ -47,34 +76,6 @@ module Epub
 
     def navmap
       root.css('navMap')
-    end
-
-    def nav(level = 1)
-      html     = <<EOF
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" profile="http://www.idpf.org/epub/30/profile/content/">
-  <head>
-    <title>#{title}</title>
-  </head>
-  <body>
-    <nav id="toc" epub:type="toc">
-      <ol>
-EOF
-      selector = "ncx > navMap"
-      level.times { selector += " > navPoint" }
-      @xml.css(selector).each do |point|
-        html += <<EOF
-<li id="#{point.attr('id').to_s}">
-  <a href="#{point.css('content').attr('src').to_s}">#{point.css('navLabel text').text}</a>
-</li>
-EOF
-      end
-      html += <<EOF
-      </ol>
-    </nav>
-  </body>
-</html>
-EOF
-      html
     end
 
   end
