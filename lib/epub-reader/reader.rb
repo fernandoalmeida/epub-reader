@@ -55,10 +55,14 @@ module Epub
       container.package(index)
     end
 
+    def toc
+      @toc ||= Toc.new(package.toc, file).html
+    end
+    
     private
 
     def valid?
-      valid_mimetype? && valid_container? && valid_package?
+      valid_mimetype? && valid_container? && valid_package? && valid_toc?
     end
 
     def valid_mimetype?
@@ -71,6 +75,11 @@ module Epub
 
     def valid_package?
       package.path.match(/\.opf$/) && package.mediatype == PACKAGE_MEDIATYPE
+    end
+
+    # TODO: validates TOC
+    def valid_toc?
+      true
     end
 
   end

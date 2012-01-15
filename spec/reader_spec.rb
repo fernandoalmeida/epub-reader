@@ -39,4 +39,8 @@ describe Epub::Reader do
     @reader.package.should be_a(Epub::Package)
   end
 
+  # it 'get the TOC (HTML)' do
+  #   @reader.toc.should_not be_empty
+  # end
+
 end

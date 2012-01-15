@@ -20,27 +20,27 @@ describe Epub::Package do
   end
 
   it 'get the epub version' do
-    @reader.package.version.should eq(2)
+    @reader.package.version.should eq(3)
   end
 
   it 'get the epub unique identifier' do
-    @reader.package.identifier.should eq("urn:uuid:bdb0c6b5-5620-440f-9e14-5e1500197941")
+    @reader.package.identifier.should eq("urn:isbn:9780316000000")
   end
 
   it 'get the content language' do
-    @reader.package.language.should eq("en")
+    @reader.package.language.should eq("en-US")
   end
 
   it 'get the content title' do
-    @reader.package.title.should eq("Flowers of Evil")
+    @reader.package.title.should eq("Moby-Dick")
   end
 
   it 'get the content creator' do
-    @reader.package.creator.should eq("Charles Baudelaire")
+    @reader.package.creator.should eq("Herman Melville")
   end
 
   it 'get the content contributor' do
-    @reader.package.contributor.should eq("ManyBooks.net")
+    @reader.package.contributor.should be_empty
   end
 
   it 'get the publication date' do
@@ -60,11 +60,11 @@ describe Epub::Package do
   end
 
   it 'get the image list' do
-    @reader.package.images.size.should eq(1)
+    @reader.package.images.size.should eq(2)
   end
 
   it 'get the html list' do
-    @reader.package.html.size.should eq(2)
+    @reader.package.html.size.should eq(143)
   end
 
   it 'get the stylesheet list' do
@@ -84,18 +84,18 @@ describe Epub::Package do
   end
 
   it 'get the table of content (toc)' do
-    @reader.package.toc.should eq("toc.ncx")
+    @reader.package.toc.should eq("OPS/toc.ncx")
   end
 
   it 'get the reading order' do
     list = @reader.package.reading_order
-    list.size.should eq(2)
-    list[0].attr('idref').should eq('titlepage')
-    list[1].attr('idref').should eq('html')
+    list.size.should eq(142)
+    list[0].attr('idref').should eq('cover')
+    list[1].attr('idref').should eq('titlepage')
   end
 
   it 'get the book cover' do
-    @reader.package.cover.should eq("cover.jpg")
+    @reader.package.cover.should eq("images/9780316000000.jpg")
   end
 
 end

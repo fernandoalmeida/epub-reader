@@ -46,7 +46,7 @@ module Epub
       creators.size > 0 ? creators.first.text : ""
     end
 
-    # TODO: creator copy
+    # TODO: equal to creator
     def contributor
       contributors.size > 0 ? contributors.first.text : ""
     end
@@ -98,18 +98,17 @@ module Epub
       toc_item_id       = spine.attr("toc")
       toc_item_mimetype = "application/x-dtbncx+xml"
       toc_item_selector = toc_item_id ? "##{toc_item_id.to_s}" : '[media-type="#{toc_item_mimetype}"]'
-      resources.css(toc_item_selector).attr('href').to_s
+      path[0, path.rindex('/')+1] + resources.css(toc_item_selector).attr('href').to_s
     end
 
     def cover
-      cover_meta    = metadata.css('[name="cover"]')
-      cover_content = cover_meta ? cover_meta.attr('content').to_s : ""
+      cover_meta     = metadata.css('[name="cover"]')
+      meta_content   = cover_meta.size == 1 ? cover_meta.attr('content') : nil
+      cover_content  = meta_content || manifest.css('[properties="cover-image"]').attr('id').to_s
       cover_content.match(/\.(gif|jpe?g|png)/) ? cover_content : resources.css("##{cover_content}").attr('href').to_s
     end
 
-    # TODO: to do parse of
-    # manifest [required]
-    # spine    [required]
+    # TODO: to parse
     # guide    [optional/deprecated]
     # bindings [optional]
 
@@ -117,7 +116,7 @@ module Epub
       spine.css('itemref')
     end
 
-    private
+    protected
 
     def get_package_content(file)
       begin
@@ -221,6 +220,5 @@ module Epub
     def reading_order_selectors
       reading_order.map{|item| "##{item.attr('idref')}"}
     end
-    
   end
 end
