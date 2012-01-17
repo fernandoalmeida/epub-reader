@@ -11,10 +11,10 @@ The recommended installation method is via Rubygems.
 
 # Usage
 
-Begin by creating a EPUB::Reader instance that points to a EPUB file. Document
+Begin by creating a Epub::Reader instance that points to a EPUB file. Document
 level information (metadata, toc, page count, etc) is available via this object.
 
-    reader = EPUB::Reader.open("somefile.epub")
+    reader = Epub::Reader.open("somefile.epub")
     puts reader.epub_version
     puts reader.title
     puts reader.author
@@ -24,6 +24,35 @@ level information (metadata, toc, page count, etc) is available via this object.
       puts page.title
       puts page.content
     end
+
+# Exceptions
+
+There are two key exceptions that you will need to watch out for when processing a
+EPUB file:
+
+FileNotFoundError - The argument passed to Epub::Reader.open('file.epub') is a file
+path. If the file does not exist the FileNotFoundError is thrown.
+
+MalformedEpubError - The EPUB appears to be corrupt in some way. If you believe the
+file should be valid, or that a corrupt file didn't raise an exception, please
+forward a copy of the file to the maintainers using the Bitbucket issue tracker
+and we will attempt to improve the code.
+
+MalformedEpubError has some subclasses if you want to detect finer grained issues. If you
+don't, 'rescue MalformedEpubError' will catch all the subclassed errors as well.
+
+Any other exceptions should be considered bugs in either Epub::Reader (please
+report it!).
+
+# Mantainers
+
+- Fernando Almeida <fernando@fernandoalmeida.net>
+- Celestino Gomes <tinorj@gmail.com>
+- Sérgio Souza Lima <sergiosouzalima@gmail.com>
+
+# Licensing
+
+This is a proprietary library and all rights are reserved to CloudPub.me.
 
 # References
 
