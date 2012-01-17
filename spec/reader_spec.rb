@@ -27,20 +27,31 @@ describe Epub::Reader do
     @reader.mimetype.should eq("application/epub+zip")
   end
 
-  it 'get epub zipped file handler' do
-    @reader.file.should be_a(Epub::EpubFile)
+  it 'get the epub version' do
+    @reader.epub_version.should eq(3)
   end
 
-  it 'get the container document handler' do
-    @reader.container.should be_a(Epub::Container)
+  it 'get the title' do
+    @reader.title.should eq("Moby-Dick")
   end
 
-  it 'get the package document handler' do
-    @reader.package.should be_a(Epub::Package)
+  it 'get the author' do
+    @reader.author.should eq("Herman Melville")
   end
 
-  # it 'get the TOC (HTML)' do
-  #   @reader.toc.should_not be_empty
-  # end
+  it 'get the publication date' do
+    @reader.publication_date.should be_empty
+  end
 
+  it 'get the language' do
+    @reader.language.should eq("en-US")
+  end
+
+  it 'get the TOC' do
+    @reader.toc.should be_a(Epub::Toc)
+  end
+
+  it 'get the pages list' do
+    @reader.pages.size.should eq(142)
+  end
 end

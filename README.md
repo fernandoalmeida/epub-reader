@@ -14,11 +14,16 @@ The recommended installation method is via Rubygems.
 Begin by creating a EPUB::Reader instance that points to a EPUB file. Document
 level information (metadata, toc, page count, etc) is available via this object.
 
-    reader = EPUB::Reader.open("somefile.epub")  
+    reader = EPUB::Reader.open("somefile.epub")
+    puts reader.epub_version
     puts reader.title
-    puts reader.language
     puts reader.author
-    puts reader.pages
+    puts reader.publication_date
+    puts reader.language
+    reader.pages.each do |page|
+      puts page.title
+      puts page.content
+    end
 
 # References
 

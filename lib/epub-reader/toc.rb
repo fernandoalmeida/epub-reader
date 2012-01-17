@@ -1,17 +1,14 @@
 module Epub
   class Toc
-    def initialize(tocfile, file = nil)
+
+    def initialize(tocfile, file)
       @tocfile = tocfile
-      @content = file ? get_toc_content(file) : tocfile
-      @xml     = Nokogiri::XML(@content)
-      @xml.remove_namespaces!
+      @file    = file
+      @content = get_toc_content
+      @xml     = Nokogiri::XML(@content).remove_namespaces!
     end
 
-    def raw
-      @content
-    end
-
-    def html
+    def content
       if ncx?
         ncx_to_html
       else
@@ -19,15 +16,23 @@ module Epub
       end
     end
 
+    def pages
+      @xml.css("ncx > navMap > navPoint").map do |point|
+        title = point.css('navLabel text').text
+        path  = @tocfile[0, @tocfile.rindex('/')+1] + point.css('content').attr('src').to_s
+        Page.new(title, path, @file)
+      end
+    end
+
     private
 
     def ncx?
-      @tocfile.match(/(\.ncx)$|(<ncx.*>)/)
+      @tocfile.match(/(\.ncx)$/)
     end
 
-    def get_toc_content(file)
+    def get_toc_content
       begin
-        file.get_input_stream(@tocfile).read
+        @file.get_input_stream(@tocfile).read
       rescue
         nil
       end
@@ -48,15 +53,11 @@ module Epub
       <nav id="toc" epub:type="toc">
         <ol>
 EOF
-      selector = "ncx > navMap > navPoint"
-      @xml.css(selector).each do |point|
-        html += <<EOF
-<li id="#{point.attr('id').to_s}">
-  <a href="#{point.css('content').attr('src').to_s}">#{point.css('navLabel text').text}</a>
-</li>
-EOF
-      end
-      html += <<EOF
+          selector = "ncx > navMap > navPoint"
+          @xml.css(selector).each do |point|
+            html += "<li id=\"#{point.attr('id').to_s}\"><a href=\"#{point.css('content').attr('src').to_s}\">#{point.css('navLabel text').text}</a></li>"
+          end
+          html += <<EOF
         </ol>
       </nav>
     </section>

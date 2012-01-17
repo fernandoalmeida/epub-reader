@@ -4,8 +4,7 @@ module Epub
     def initialize(rootfile, file)
       @rootfile = rootfile
       @package  = get_package_content(file)
-      @xml = Nokogiri::XML(@package)
-      @xml.remove_namespaces!
+      @xml = Nokogiri::XML(@package).remove_namespaces!
     end
 
     def raw

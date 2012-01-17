@@ -30,6 +30,34 @@ module Epub
       end
     end
 
+    def epub_version
+      package.version
+    end
+
+    def title
+      package.title
+    end
+
+    def author
+      package.creator
+    end
+
+    def publication_date
+      package.date
+    end
+
+    def language
+      package.language
+    end
+
+    def toc
+      @toc ||= Toc.new(package.toc, file)
+    end
+
+    def pages
+      @pages ||= toc.pages
+    end
+    
     def container
       @container ||= Container.new(file)
     end
@@ -55,10 +83,6 @@ module Epub
       container.package(index)
     end
 
-    def toc
-      @toc ||= Toc.new(package.toc, file).html
-    end
-    
     private
 
     def valid?
