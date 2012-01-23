@@ -34,6 +34,10 @@ module Epub
       package.version
     end
 
+    def uid
+      package.identifier
+    end
+
     def title
       package.title
     end

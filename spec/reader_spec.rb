@@ -31,6 +31,10 @@ describe Epub::Reader do
     @reader.epub_version.should eq(3)
   end
 
+  it 'get the epub unique identifier' do
+    @reader.uid.should eq("urn:isbn:9780316000000")
+  end
+
   it 'get the title' do
     @reader.title.should eq("Moby-Dick")
   end

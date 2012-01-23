@@ -23,7 +23,7 @@ describe Epub::Package do
     @reader.package.version.should eq(3)
   end
 
-  it 'get the epub unique identifier' do
+  it 'get the unique identifier' do
     @reader.package.identifier.should eq("urn:isbn:9780316000000")
   end
 

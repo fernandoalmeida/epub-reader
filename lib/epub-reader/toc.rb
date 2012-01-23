@@ -19,8 +19,10 @@ module Epub
     def pages
       @xml.css("ncx > navMap > navPoint").map do |point|
         title = point.css('navLabel text').text
-        path  = @tocfile[0, @tocfile.rindex('/')+1] + point.css('content').attr('src').to_s
-        Page.new(title, path, @file)
+        i   = @tocfile.rindex('/').to_i
+        dir = i > 0 ? @tocfile[0, i+1].to_s : ""
+        file_path  = dir + point.css('content').attr('src').to_s
+        Page.new(title, file_path, @file)
       end
     end
 
