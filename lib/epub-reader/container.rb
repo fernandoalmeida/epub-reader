@@ -3,12 +3,13 @@ module Epub
     
     attr_reader :packages
     
-    def initialize(file)
-      @container = get_container_content(file)
+    def initialize(reader)
+      @reader    = reader
+      @container = get_container_content
       @xml       = Nokogiri::XML(@container)
       @packages  = []
       @xml.css('container rootfiles rootfile').each do |rootfile|
-        @packages << Package.new(rootfile, file)
+        @packages << Package.new(rootfile, @reader.file)
       end
     end
 
@@ -22,9 +23,9 @@ module Epub
     
     private
 
-    def get_container_content(file)
+    def get_container_content
       begin
-        file.get_input_stream('META-INF/container.xml').read
+        @reader.file.get_input_stream('META-INF/container.xml').read
       rescue
         nil
       end

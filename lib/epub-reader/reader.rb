@@ -55,7 +55,7 @@ module Epub
     end
 
     def toc
-      @toc ||= Toc.new(package.toc, file)
+      @toc ||= Toc.new(package.toc, self)
     end
 
     def pages
@@ -63,7 +63,7 @@ module Epub
     end
     
     def container
-      @container ||= Container.new(file)
+      @container ||= Container.new(self)
     end
 
     # TODO: To parse other META-INF files

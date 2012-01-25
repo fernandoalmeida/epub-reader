@@ -5,7 +5,7 @@ describe Epub::Page do
   before(:all) do
     file   = 'spec/data/valid.epub'
     reader = Epub::Reader.open(file)
-    @toc   = Epub::Toc.new(reader.package.toc, reader.file)
+    @toc   = Epub::Toc.new(reader.package.toc, reader)
     @page  = @toc.pages.last
   end
 

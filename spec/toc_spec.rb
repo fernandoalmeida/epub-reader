@@ -4,9 +4,9 @@ require 'spec_helper'
 describe Epub::Toc do
 
   before(:all) do
-    file   = 'spec/data/valid.epub'
-    reader = Epub::Reader.open(file)
-    @toc    = Epub::Toc.new(reader.package.toc, reader.file)
+    file    = 'spec/data/valid.epub'
+    @reader = Epub::Reader.open(file)
+    @toc    = Epub::Toc.new(@reader.package.toc, @reader)
     @html   = Nokogiri::XML(@toc.content)
   end
 
@@ -25,5 +25,4 @@ describe Epub::Toc do
   it 'convert <navPoint> to <a>' do
     @html.css('li > a').size.should eq(142)
   end
-
 end

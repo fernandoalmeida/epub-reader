@@ -12,7 +12,12 @@ module Epub
     end
 
     def path
-      @rootfile.attr('full-path')
+      @rootfile.attr('full-path').to_s
+    end
+
+    def relative_content_path
+      i   = path.rindex('/').to_i
+      i > 0 ? path[0,i+1] : ""
     end
 
     def mediatype
@@ -97,9 +102,7 @@ module Epub
       toc_item_id       = spine.attr("toc")
       toc_item_mimetype = "application/x-dtbncx+xml"
       toc_item_selector = toc_item_id ? "##{toc_item_id.to_s}" : '[media-type="#{toc_item_mimetype}"]'
-      i   = path.rindex('/').to_i
-      dir = i > 0 ? path[0, i+1] : ""
-      dir + resources.css(toc_item_selector).attr('href').to_s
+      relative_content_path + resources.css(toc_item_selector).attr('href').to_s
     end
 
     def cover
@@ -114,10 +117,17 @@ module Epub
     # bindings [optional]
 
     def reading_order
-      spine.css('itemref')
+      spine_items.map do |item|
+        item_id = item.attr('idref').to_s
+        manifest.css("##{item_id}") if item_id
+      end
     end
 
     protected
+
+    def spine_items
+      spine.css('itemref')
+    end
 
     def get_package_content(file)
       begin

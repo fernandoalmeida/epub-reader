@@ -90,8 +90,8 @@ describe Epub::Package do
   it 'get the reading order' do
     list = @reader.package.reading_order
     list.size.should eq(142)
-    list[0].attr('idref').should eq('cover')
-    list[1].attr('idref').should eq('titlepage')
+    list[0].attr('href').to_s.should eq('cover.xhtml')
+    list[1].attr('href').to_s.should eq('titlepage.xhtml')
   end
 
   it 'get the book cover' do
