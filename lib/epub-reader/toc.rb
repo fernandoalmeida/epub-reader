@@ -22,11 +22,11 @@ module Epub
     end
     
     def pages
-      points = @xml.css("ncx > navMap > navPoint")
+      points = @xml.css("ncx navMap navPoint")
       items  = @reader.package.reading_order
-      if ncx? && has_toc? && points.size >= items.size
+      if ncx? && has_toc? && points.size > 1
         points.map do |point|
-          title = point.css('navLabel text').text
+          title = point.css('navLabel > text').first.text
           file_path  = @reader.package.relative_content_path + point.css('content').attr('src').to_s
           Page.new(title, file_path, @reader.file)
         end
@@ -40,7 +40,7 @@ module Epub
     end
     
     private
-
+      
     def ncx?
       @tocfile.match(/(\.ncx)$/)
     end
@@ -53,7 +53,7 @@ module Epub
       begin
         @reader.file.get_input_stream(@tocfile).read
       rescue
-        nil
+        ""
       end
     end
 

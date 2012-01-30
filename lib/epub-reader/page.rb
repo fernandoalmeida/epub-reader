@@ -16,9 +16,9 @@ module Epub
 
     def get_page_content
       begin
-        @file.get_input_stream(@path).read
+        @file.get_input_stream(@path).read.force_encoding(Encoding::UTF_8)
       rescue
-        nil
+        ""
       end
     end
 
