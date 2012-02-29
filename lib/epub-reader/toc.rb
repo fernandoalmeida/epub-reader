@@ -59,6 +59,7 @@ module Epub
 
     # TODO: Add Stylesheets
     # TODO: Convert nested navigation
+    # TODO: Refactoring to DRY with spine_to_html
     def ncx_to_html
       html     = <<EOF
 <?xml version="1.0" encoding="UTF-8"?>

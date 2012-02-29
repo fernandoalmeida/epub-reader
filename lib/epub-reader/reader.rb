@@ -94,7 +94,7 @@ module Epub
     end
 
     def valid_mimetype?
-      mimetype == EPUB_MIMETYPE
+      /application\/epub\+zip/.match(mimetype)
     end
 
     def valid_container?
