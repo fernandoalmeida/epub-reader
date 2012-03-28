@@ -23,7 +23,7 @@ module Epub
     end
 
     def mimetype
-      begin
+      @mimetype ||= begin
         file.get_input_stream('mimetype').read
       rescue
         nil
@@ -31,27 +31,27 @@ module Epub
     end
 
     def epub_version
-      package.version
+      @version ||= package.version
     end
 
     def uid
-      package.identifier
+      @uid ||= package.identifier
     end
 
     def title
-      package.title
+      @title ||= package.title
     end
 
     def author
-      package.creator
+      @author ||= package.creator
     end
 
     def publication_date
-      package.date
+      @publication_date ||= package.date
     end
 
     def language
-      package.language
+      @language ||= package.language
     end
 
     def toc
@@ -64,6 +64,10 @@ module Epub
     
     def container
       @container ||= Container.new(self)
+    end
+
+    def cover
+      @cover ||= package.cover
     end
 
     # TODO: To parse other META-INF files
