@@ -106,11 +106,14 @@ module Epub
     end
 
     def cover
-      cover_meta     = metadata.css('[name="cover"]')
-      meta_content   = cover_meta.size == 1 ? cover_meta.attr('content') : nil
-      cover_tag      = meta_content || manifest.css('[properties="cover-image"]')
-      cover_content  = cover_tag.size > 0 ? cover_tag.attr('id').to_s : nil
-      cover_content  ? relative_content_path + (cover_content.to_s.match(/\.(gif|jpe?g|png)/) ? cover_content : resources.css("##{cover_content}").attr('href').to_s) : ""
+      begin
+        cover_meta     = metadata.css('[name="cover"]')
+        meta_content   = cover_meta.size == 1 ? cover_meta.attr('content') : nil
+        cover_content  = meta_content || manifest.css('[properties="cover-image"]').attr('id').to_s
+        relative_content_path + (cover_content.to_s.match(/\.(gif|jpe?g|png)/) ? cover_content : resources.css("##{cover_content}").attr('href').to_s)
+      rescue
+        ""
+      end
     end
 
     # TODO: to parse
