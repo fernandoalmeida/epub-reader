@@ -3,6 +3,7 @@ module Epub
 
     def initialize(rootfile, file)
       @rootfile = rootfile
+      @file     = file
       @package  = get_package_content(file)
       @xml = Nokogiri::XML(@package).remove_namespaces!
     end
@@ -110,7 +111,14 @@ module Epub
         cover_meta     = metadata.css('[name="cover"]')
         meta_content   = cover_meta.size == 1 ? cover_meta.attr('content') : nil
         cover_content  = meta_content || manifest.css('[properties="cover-image"]').attr('id').to_s
-        relative_content_path + (cover_content.to_s.match(/\.(gif|jpe?g|png)/) ? cover_content : resources.css("##{cover_content}").attr('href').to_s)
+        cover_path     = (cover_content.to_s.match(/\.(gif|jpe?g|png)/) ? cover_content : resources.css("##{cover_content}").attr('href').to_s)
+        if cover_exist?(relative_content_path + cover_path)
+          relative_content_path + cover_path
+        elsif cover_exist?(relative_content_path + "Images/" + cover_path)
+          relative_content_path + "Images/" + cover_path
+        else
+          ""
+        end
       rescue
         ""
       end
@@ -138,6 +146,14 @@ module Epub
         file.get_input_stream(path)
       rescue
         nil
+      end
+    end
+
+    def cover_exist?(path)
+      begin
+        !!@file.find_entry(path)
+      rescue
+        false
       end
     end
 
