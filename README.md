@@ -47,12 +47,10 @@ report it!).
 # Mantainers
 
 - Fernando Almeida <fernando@fernandoalmeida.net>
-- Celestino Gomes <tinorj@gmail.com>
-- Sérgio Souza Lima <sergiosouzalima@gmail.com>
 
 # Licensing
 
-This is a proprietary library and all rights are reserved to CloudPub.me.
+This is a proprietary library and all rights are reserved to eBookPlus.com.
 
 # References
 

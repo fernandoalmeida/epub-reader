@@ -95,7 +95,7 @@ describe Epub::Package do
   end
 
   it 'get the book cover' do
-    @reader.package.cover.should eq("images/9780316000000.jpg")
+    @reader.package.cover.should eq("OPS/images/9780316000000.jpg")
   end
 
 end
