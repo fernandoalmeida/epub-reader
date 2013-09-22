@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Epub::Reader::VERSION
   s.authors     = ["Fernando Almeida"]
   s.email       = ["fernando@fernandoalmeida.net"]
-  s.homepage    = "http://bitbucket.com/fernandoalmeida/epub-reader"
+  s.homepage    = "http://fernandoalmeida.github.io/epub-reader"
   s.summary     = "A library for accessing the content of EPUB files"
   s.description = "The epub-reader library implements a EPUB parser conforming as much as possible to the EPUB 3 specification from IDPF"
 

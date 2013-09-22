@@ -14,7 +14,7 @@ The recommended installation method is via Rubygems.
 Begin by creating a Epub::Reader instance that points to a EPUB file. Document
 level information (metadata, toc, page count, etc) is available via this object.
 
-    reader = Epub::Reader.open("somefile.epub")
+    reader = Epub::Reader.open("/path/to/ebook.epub")
     puts reader.epub_version
     puts reader.title
     puts reader.author
@@ -30,10 +30,10 @@ level information (metadata, toc, page count, etc) is available via this object.
 There are two key exceptions that you will need to watch out for when processing a
 EPUB file:
 
-FileNotFoundError - The argument passed to Epub::Reader.open('file.epub') is a file
+*FileNotFoundError* - The argument passed to Epub::Reader.open('/path/to/ebook.epub') is a file
 path. If the file does not exist the FileNotFoundError is thrown.
 
-MalformedEpubError - The EPUB appears to be corrupt in some way. If you believe the
+*MalformedEpubError* - The EPUB appears to be corrupt in some way. If you believe the
 file should be valid, or that a corrupt file didn't raise an exception, please
 forward a copy of the file to the maintainers using the Bitbucket issue tracker
 and we will attempt to improve the code.
@@ -50,7 +50,7 @@ report it!).
 
 # Licensing
 
-This is a proprietary library and all rights are reserved to eBookPlus.com.
+This is a open source library released under the MIT license.
 
 # References
 
