@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Epub-reader by fernandoalmeida</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Epub-reader</h1>
+        <h2>EPUB Reader is a Ruby library which helps you to parse EPUB files conforming as much as possible the specification from IDPF.</h2>
+        <a href="https://github.com/fernandoalmeida/epub-reader" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h1>
+
+<p>EPUB Reader is a Ruby library which helps you to parse EPUB files conforming
+as much as possible the specification from IDPF.</p>
+
+<h1>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h1>
+
+<p>The recommended installation method is via Rubygems.</p>
+
+<pre><code>gem install epub-reader
+</code></pre>
+
+<h1>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h1>
+
+<p>Begin by creating a Epub::Reader instance that points to a EPUB file. Document
+level information (metadata, toc, page count, etc) is available via this object.</p>
+
+<pre><code>reader = Epub::Reader.open("/path/to/ebook.epub")
+puts reader.epub_version
+puts reader.title
+puts reader.author
+puts reader.publication_date
+puts reader.language
+reader.pages.each do |page|
+  puts page.title
+  puts page.content
+end
+</code></pre>
+
+<h1>
+<a name="exceptions" class="anchor" href="#exceptions"><span class="octicon octicon-link"></span></a>Exceptions</h1>
+
+<p>There are two key exceptions that you will need to watch out for when processing a
+EPUB file:</p>
+
+<p><em>FileNotFoundError</em> - The argument passed to Epub::Reader.open('/path/to/ebook.epub') is a file
+path. If the file does not exist the FileNotFoundError is thrown.</p>
+
+<p><em>MalformedEpubError</em> - The EPUB appears to be corrupt in some way. If you believe the
+file should be valid, or that a corrupt file didn't raise an exception, please
+forward a copy of the file to the maintainers using the Bitbucket issue tracker
+and we will attempt to improve the code.</p>
+
+<p>MalformedEpubError has some subclasses if you want to detect finer grained issues. If you
+don't, 'rescue MalformedEpubError' will catch all the subclassed errors as well.</p>
+
+<p>Any other exceptions should be considered bugs in either Epub::Reader (please
+report it!).</p>
+
+<h1>
+<a name="mantainers" class="anchor" href="#mantainers"><span class="octicon octicon-link"></span></a>Mantainers</h1>
+
+<ul>
+<li>Fernando Almeida <a href="mailto:fernando@fernandoalmeida.net">fernando@fernandoalmeida.net</a>
+</li>
+</ul><h1>
+<a name="licensing" class="anchor" href="#licensing"><span class="octicon octicon-link"></span></a>Licensing</h1>
+
+<p>This is a open source library released under the MIT license.</p>
+
+<h1>
+<a name="references" class="anchor" href="#references"><span class="octicon octicon-link"></span></a>References</h1>
+
+<p><a href="http://shop.oreilly.com/product/0636920022442.do">What is EPUB 3?</a></p>
+
+<p><a href="http://idpf.org/epub/30/spec/epub30-publications.html">EPUB Publications Specifications</a></p>
+
+<p><a href="http://idpf.org/epub/30/spec/epub30-contentdocs.html">EPUB Content Documents Specifications</a></p>
+
+<p><a href="http://idpf.org/epub/30/spec/epub30-ocf.html">EPUB Open Container Formats Specifications</a></p>
+
+<p><a href="http://code.google.com/p/epub-revision/downloads/list">Shared Workspace for Emerging Specifications and Schemas for EPUB 3</a></p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/fernandoalmeida/epub-reader/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/fernandoalmeida/epub-reader/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/fernandoalmeida/epub-reader"></a> is maintained by <a href="https://github.com/fernandoalmeida">fernandoalmeida</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
